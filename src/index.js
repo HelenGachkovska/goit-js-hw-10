@@ -54,7 +54,7 @@ function verifyResponse(data) {
   }
 }
 
-// Створюємо країну(одна)
+// Створюємо країну
 
 function createCountry(data) {
   const [
