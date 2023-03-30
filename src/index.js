@@ -1,7 +1,7 @@
 import './css/styles.css';
 import Notiflix from 'notiflix';
 import debounce from 'lodash.debounce';
-import fetchCountries from './fetchCountries';
+import {fetchCountries} from './fetchCountries';
 
 const DEBOUNCE_DELAY = 300;
 const inputEl = document.querySelector('#search-box');
@@ -24,7 +24,7 @@ inputEl.addEventListener(
 // Обробляємо проміс
 
 function hendlerInputCountry(ev) {
-  nameCountry = ev.target.value;
+  nameCountry = ev.target.value.trim();
   if (nameCountry !== '') {
     fetchCountries(nameCountry)
       .then(data => {
@@ -32,7 +32,10 @@ function hendlerInputCountry(ev) {
         return data;
       })
       .catch(error => {
-        Notiflix.Notify.failure('Oops, there is no country with that name');
+        if(error.message === '404') {
+          Notiflix.Notify.failure('Oops, there is no country with that name');
+        }        
+        console.log(error);
       });
   }
 }
